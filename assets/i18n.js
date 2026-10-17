@@ -13,7 +13,7 @@
       "ui.repo": "GitHub Repo ↗",
 
       "slide.1.title": "Agent Commerce & Security Foundations",
-      "slide.2.title": "Speaker & Research Foundation",
+      "slide.2.title": "About the Instructor: Ken Huang, CISSP",
       "slide.3.title": "Commerce Threat Landscape",
       "slide.4.title": "Modern Payment Protocols",
       "slide.5.title": "Financial Security Contracts",
@@ -39,8 +39,8 @@
 
       // Slide 2
       "about.kicker": "Authority & Academic Grounding",
-      "about.title": "Speaker & Research Foundation",
-      "about.h2": "Ken Huang, CISSP",
+      "about.title": "About the Instructor: Ken Huang, CISSP",
+      "about.h2": "About the Instructor: Ken Huang, CISSP",
       "about.b1": "AI Book Author & Speaker (Harness Engineering, MAESTRO, Agentic AI)",
       "about.b2": "Adjunct Professor, University of San Francisco (USF)",
       "about.b3": "OWASP AIVSS Project Lead",
@@ -131,7 +131,7 @@
       "ui.repo": "GitHub 代码仓 ↗",
 
       "slide.1.title": "智能体商业与安全基础",
-      "slide.2.title": "主讲人与研究基石",
+      "slide.2.title": "关于讲师：黄健 (Ken Huang), CISSP",
       "slide.3.title": "智能体商业威胁全景",
       "slide.4.title": "现代智能体支付协议",
       "slide.5.title": "金融安全合约与不变量",
@@ -157,8 +157,8 @@
 
       // Slide 2
       "about.kicker": "权威资质与学术基石",
-      "about.title": "主讲人与研究基石",
-      "about.h2": "黄健 (Ken Huang), CISSP",
+      "about.title": "关于讲师：黄健 (Ken Huang), CISSP",
+      "about.h2": "关于讲师：黄健 (Ken Huang), CISSP",
       "about.b1": "AI 著作作者与演讲嘉宾（Harness Engineering、MAESTRO、Agentic AI）",
       "about.b2": "旧金山大学 (University of San Francisco) 客座教授",
       "about.b3": "OWASP AIVSS 项目负责人",

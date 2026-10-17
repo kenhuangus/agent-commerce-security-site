@@ -347,7 +347,148 @@ a { color: inherit; text-decoration: none; }
   margin-top: 2.2vh;
 }
 
-/* ---------- Slide 2: About Ken Huang ---------- */
+/* ---------- Slide 2: About Ken Huang (Exact packt-harness styles) ---------- */
+.instructor-slide-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.02fr) minmax(0, 1.25fr);
+  gap: 1.25rem;
+  height: 100%;
+  align-items: start;
+}
+@media (max-width: 1040px) {
+  .instructor-slide-grid {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+}
+.instructor-info-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.50rem;
+  min-width: 0;
+}
+.instructor-info-col .main-bullets,
+.instructor-info-col .main-bullets.dense-columns,
+.instructor-info-col .bullet-list {
+  columns: 1 !important;
+  column-gap: 0 !important;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.95rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.instructor-info-col .bullet-group {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.instructor-info-col .primary-bullet {
+  line-height: 1.45;
+  margin-bottom: 0.10rem;
+  font-size: clamp(0.85rem, 1.8vh, 1.0rem);
+  color: var(--ink);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.45vh 0.75rem;
+  box-shadow: var(--shadow);
+}
+.instructor-info-col .primary-bullet a {
+  color: var(--accent);
+  text-decoration: underline;
+}
+.slide-svg {
+  display: block;
+  width: 100% !important;
+  height: auto;
+  max-width: 100%;
+  margin: 0.15rem 0 0.45rem 0;
+}
+.author-books-card {
+  background: #ffffff;
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow);
+}
+.author-books-header {
+  background: rgba(255, 106, 43, 0.08);
+  padding: 0.65vh 1.0rem;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Space Grotesk', Inter, sans-serif;
+  font-weight: 700;
+  font-size: clamp(0.86rem, 1.8vh, 0.98rem);
+  color: var(--ink);
+}
+.author-books-header a {
+  font-family: var(--hand);
+  font-size: clamp(0.92rem, 1.95vh, 1.08rem);
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 700;
+}
+.books-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.40rem;
+  padding: 0.55rem;
+  background: #fafaf8;
+}
+.book-item-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0.25rem 0.18rem;
+  text-decoration: none;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  transition: transform 0.18s, border-color 0.18s, box-shadow 0.18s;
+}
+.book-item-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  box-shadow: 0 4px 12px rgba(255, 106, 43, 0.2);
+}
+.book-cover-img {
+  width: 100%;
+  height: clamp(75px, 11vh, 110px);
+  object-fit: contain;
+  border-radius: 4px;
+  border: 0.5px solid var(--line);
+}
+.book-item-title {
+  font-size: 0.58rem;
+  font-weight: 700;
+  color: var(--ink);
+  text-align: center;
+  line-height: 1.15;
+  margin-top: 0.20rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+.book-publisher-tag {
+  font-size: 0.48rem;
+  font-weight: 800;
+  color: var(--accent);
+  background: rgba(255, 106, 43, 0.1);
+  padding: 0.05rem 0.20rem;
+  border-radius: 3px;
+  margin-top: 0.12rem;
+  text-transform: uppercase;
+}
+
 .about {
   display: grid;
   grid-template-columns: 1.05fr 1.05fr;
