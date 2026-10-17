@@ -12,7 +12,7 @@ Presented by **黄连金 (Ken Huang), CISSP** — Adjunct Professor, University 
 
 ## Abstract
 
-This 16-slide presentation defines technical security architecture for autonomous machine-to-machine (M2M) commerce. It details non-custodial payment protocols (HTTP 402/x402, Metered Payment Protocol, ERC-8004) and on-chain contract invariants that enforce spending caps, timelocks, and dispute escrow. Operational controls include a 6-tier autonomy framework (LoA 0–5) with automated circuit breakers, domain ontology-driven Intent-Based Access Control (IBAC) to prevent Confused Deputy exploits, and a 3-tier memory model (ephemeral, quarantined, and immutable storage) to mitigate context poisoning. OpenTelemetry semantic execution tracing and deterministic PreToolUse/PostToolUse runtime hooks enforce parameter validation and trajectory containment.
+This presentation outlines an enterprise security and risk governance framework for autonomous machine-to-machine commerce. It examines how organizations can safely deploy AI agents with transactional capabilities by establishing strict financial spending limits, escrow mechanisms, and automated transaction safeguards. The operational model introduces tiered autonomy levels to balance automated execution against enterprise risk, intent-based authorization to prevent unauthorized delegations, and memory controls to safeguard confidential corporate data. Real-time observability and policy interception ensure agents remain aligned with business objectives, prevent costly operational errors, and provide full auditability for compliance.
 
 ---
 
