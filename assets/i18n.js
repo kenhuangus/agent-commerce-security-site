@@ -150,7 +150,7 @@
       "ui.repo": "GitHub 代码仓 ↗",
 
       "slide.1.title": "智能体商业与自主安全体系",
-      "slide.2.title": "关于讲师：黄健 (Ken Huang), CISSP",
+      "slide.2.title": "关于讲师：黄连金 (Ken Huang), CISSP",
       "slide.3.title": "智能体商业威胁全景",
       "slide.4.title": "现代智能体支付协议",
       "slide.5.title": "金融安全合约与不变量",
@@ -171,14 +171,14 @@
       "hero.title": "智能体商业与安全架构基石",
       "hero.acronym": "<b>P</b>支付协议 · <b>S</b>智能合约 · <b>A</b>自主权边界 · <b>I</b>意图访问控制 · <b>M</b>记忆防护 · <b>O</b>轨迹观测",
       "hero.sub": "面向多智能体生态的<strong>自主金融执行与行为边界安全架构蓝图</strong>",
-      "hero.by": "主讲人：<strong>黄健 (Ken Huang), CISSP</strong><br/>旧金山大学 (USF) 客座教授 · 云安全联盟 (CSA) AI安全工作组联合主席 · DistributedApps.ai CEO",
+      "hero.by": "主讲人：<strong>黄连金 (Ken Huang), CISSP</strong><br/>旧金山大学 (USF) 客座教授 · 云安全联盟 (CSA) AI安全工作组联合主席 · DistributedApps.ai CEO",
       "hero.start": "开始演示 ➔",
       "hero.spec": "浏览规范蓝图 ↗",
 
       // Slide 2
       "about.kicker": "权威资质与学术基石",
-      "about.title": "关于讲师：黄健 (Ken Huang), CISSP",
-      "about.h2": "关于讲师：黄健 (Ken Huang), CISSP",
+      "about.title": "关于讲师：黄连金 (Ken Huang), CISSP",
+      "about.h2": "关于讲师：黄连金 (Ken Huang), CISSP",
       "about.b1": "AI 著作作者与演讲嘉宾（Harness Engineering、MAESTRO、Agentic AI）",
       "about.b2": "旧金山大学 (University of San Francisco) 客座教授",
       "about.b3": "OWASP AIVSS 项目负责人",
@@ -276,7 +276,7 @@
       "s16.q2_t": "自主爆炸半径控制：", "s16.q2_d": "企业团队如何在将智能体提升至 LoA 3+ 之前建立数学上可证明的遏制机制？",
       "s16.q3_t": "记忆污染隔离：", "s16.q3_d": "采用何种运行时校验机制可防止不可信商户报价污染智能体情景记忆？",
       "s16.author_lead": "专家联络与深入合作：",
-      "s16.author_desc": "Ken Huang, CISSP · 旧金山大学 (USF) 客座教授 · CSA AI 安全工作组 Fellow 兼联合主席 · DistributedApps.ai CEO"
+      "s16.author_desc": "黄连金 (Ken Huang), CISSP · 旧金山大学 (USF) 客座教授 · CSA AI 安全工作组 Fellow 兼联合主席 · DistributedApps.ai CEO"
     }
   };
 
