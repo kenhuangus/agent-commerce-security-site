@@ -10,6 +10,12 @@ Presented by **黄连金 (Ken Huang), CISSP** — Adjunct Professor, University 
 
 ---
 
+## Abstract
+
+As autonomous AI agents transition from passive cognitive advisors to active economic actors executing machine-to-machine (M2M) financial transactions, conventional perimeter defenses and human-in-the-loop checkout models become obsolete. This 16-slide interactive presentation establishes an end-to-end architectural framework for securing agentic commerce systems. It formalizes non-custodial payment rails (HTTP 402/x402, Metered Payment Protocol [MPP], and ERC-8004 A2A-Pay) integrated with smart contract mathematical invariants that strictly bound spend velocity, enforce timelocks, and prevent prompt-injected overrides. Systemic governance is structured across a 6-tier Levels of Autonomy (LoA 0–5) taxonomy equipped with multi-dimensional threshold controls and automated circuit breakers that demote agent authority upon anomaly detection. To eliminate ambient authority and neutralize Confused Deputy attacks, natural language requests are mapped into formal domain ontologies to dynamically compile single-use, attenuated capability tokens (Intent-Based Access Control / IBAC). Long-horizon memory and contextual integrity are safeguarded by a 3-tier defensive memory architecture (Ephemeral Turn, Quarantined Buffer with CRDTs and strict TTL, and Verified Long-Term Storage) that prevents indirect prompt poisoning, temporal drift, and split-brain deadlocks. Finally, OpenTelemetry GenAI semantic DAG tracing and deterministic runtime steering gates (PreToolUse/PostToolUse interceptors) provide millisecond-level containment against unauthorized trajectories, delivering a production-ready defense-in-depth harness for enterprise autonomous commerce.
+
+---
+
 ## 16 Slides Overview
 
 1. **Title Cover / Hero**: Architectural overview of Agentic Commerce & Agentic Security Foundations.
