@@ -60,13 +60,29 @@
 
   function txt(s, x, y, str, o = {}) {
     const t = document.createElementNS(NS, "text");
-    t.setAttribute("x", x); t.setAttribute("y", y);
+    t.setAttribute("x", x);
     t.setAttribute("font-family", o.family || fontFace());
-    t.setAttribute("font-size", Math.max(10, o.size || 14));
+    const fs = Math.max(10, o.size || 14);
+    t.setAttribute("font-size", fs);
     t.setAttribute("fill", o.col || COL.ink);
     t.setAttribute("text-anchor", o.anchor || "start");
     t.setAttribute("font-weight", o.weight || 400);
-    t.textContent = str;
+
+    if (typeof str === "string" && str.includes("\n")) {
+      const lines = str.split("\n");
+      const lineH = fs * 1.25;
+      const startY = y - ((lines.length - 1) * lineH) / 2;
+      lines.forEach((lineStr, lIdx) => {
+        const tspan = document.createElementNS(NS, "tspan");
+        tspan.setAttribute("x", x);
+        tspan.setAttribute("y", startY + lIdx * lineH);
+        tspan.textContent = lineStr;
+        t.appendChild(tspan);
+      });
+    } else {
+      t.setAttribute("y", y);
+      t.textContent = str;
+    }
     return addNode(s, t);
   }
 
@@ -128,41 +144,58 @@
   // Slide 4 Diagram: HTTP 402 & MPP Payment Protocol Handshake
   // -------------------------------------------------------------
   function drawPaymentFlow(host) {
-    const s = scene(host, 640, 350);
+    const s = scene(host, 640, 360);
     const zh = isZh();
 
-    // Lanes
-    line(s, 120, 40, 120, 320, { stroke: COL.blue, strokeWidth: 2 });
-    line(s, 520, 40, 520, 320, { stroke: COL.teal, strokeWidth: 2 });
-    txt(s, 120, 30, zh ? "买方智能体 (Client)" : "Buyer Agent (Client)", { anchor: "middle", weight: 700, col: COL.blue, size: 13.5 });
-    txt(s, 520, 30, zh ? "商户端 / API 提供商" : "Merchant / Provider", { anchor: "middle", weight: 700, col: COL.teal, size: 13.5 });
+    // Lanes (Lifelines)
+    line(s, 110, 48, 110, 335, { stroke: COL.blue, strokeWidth: 2.2 });
+    line(s, 530, 48, 530, 335, { stroke: COL.teal, strokeWidth: 2.2 });
+
+    // Header Avatars / Titles
+    chip(s, 25, 12, 170, 36, zh ? "买方智能体 (Client)" : "Buyer Agent (Client)", COL.blue, { size: 13, fill: "#ffffff" });
+    chip(s, 445, 12, 170, 36, zh ? "商户端 / API 提供商" : "Merchant / Provider", COL.teal, { size: 13, fill: "#ffffff" });
 
     // Step 1: Request
-    arrow(s, 120, 70, 520, 70, { stroke: COL.ink });
-    txt(s, 320, 62, "1. GET /resource (Query inference/data)", { anchor: "middle", size: 11.5 });
+    rect(s, 155, 54, 330, 26, { fill: "#ffffff", fillStyle: "solid", stroke: COL.slate, strokeWidth: 1.5 });
+    txt(s, 320, 72, zh ? "1. GET /resource (推理/数据查询请求)" : "1. GET /resource (Query/Task Request)", {
+      anchor: "middle", size: 12.5, col: COL.ink, weight: 700
+    });
+    arrow(s, 110, 86, 530, 86, { stroke: COL.slate, strokeWidth: 2 });
 
     // Step 2: 402 Payment Required
-    arrow(s, 520, 115, 120, 115, { stroke: COL.orange });
-    rect(s, 160, 95, 320, 35, { fill: hex(COL.orange, 0.1), stroke: COL.orange });
-    txt(s, 320, 118, "2. HTTP 402 Payment Required (x402 Quote / Token / Scheme)", { anchor: "middle", size: 11, col: COL.orange, weight: 700 });
+    rect(s, 145, 102, 350, 26, { fill: "#ffffff", fillStyle: "solid", stroke: COL.orange, strokeWidth: 1.8 });
+    txt(s, 320, 120, zh ? "2. HTTP 402 Payment Required (x402 计费挑战)" : "2. HTTP 402 Payment Required (x402 Challenge)", {
+      anchor: "middle", size: 12.5, col: COL.orange, weight: 700
+    });
+    arrow(s, 530, 134, 110, 134, { stroke: COL.orange, strokeWidth: 2 });
 
-    // Step 3: Local Verification & Permit2 Signing
-    rect(s, 35, 150, 170, 45, { fill: hex(COL.green, 0.12), stroke: COL.green });
-    txt(s, 120, 170, zh ? "本地策略校验 & 额度检查" : "Policy Check & Permit2", { anchor: "middle", size: 11, col: COL.green, weight: 700 });
-    txt(s, 120, 186, zh ? "生成 EIP-712 / 微支付凭单" : "Sign EIP-712 Voucher", { anchor: "middle", size: 10, col: COL.green });
+    // Step 3: Local Verification & Permit2 Signing (Buyer Internal Action)
+    rect(s, 15, 148, 190, 48, { fill: "#ffffff", fillStyle: "solid", stroke: COL.green, strokeWidth: 2 });
+    txt(s, 110, 168, zh ? "🛡️ 策略核验 & 额度准入" : "🛡️ Local Policy & Cap Check", {
+      anchor: "middle", size: 12, col: COL.green, weight: 700
+    });
+    txt(s, 110, 186, zh ? "签署 EIP-712 微支付凭单" : "Sign EIP-712 Micro-Voucher", {
+      anchor: "middle", size: 12, col: COL.green, weight: 600
+    });
 
-    // Step 4: Pay & Execute
-    arrow(s, 120, 220, 520, 220, { stroke: COL.blue });
-    rect(s, 180, 200, 280, 35, { fill: hex(COL.blue, 0.1), stroke: COL.blue });
-    txt(s, 320, 222, "3. GET /resource with X-PAYMENT: <Voucher/Sig>", { anchor: "middle", size: 11, col: COL.blue, weight: 700 });
+    // Step 4: Pay & Execute with X-PAYMENT
+    rect(s, 145, 202, 350, 26, { fill: "#ffffff", fillStyle: "solid", stroke: COL.blue, strokeWidth: 1.8 });
+    txt(s, 320, 220, zh ? "3. GET /resource + X-PAYMENT: <凭单签名>" : "3. GET /resource + X-PAYMENT: <Voucher/Sig>", {
+      anchor: "middle", size: 12.5, col: COL.blue, weight: 700
+    });
+    arrow(s, 110, 234, 530, 234, { stroke: COL.blue, strokeWidth: 2 });
 
     // Step 5: Deliver Resource
-    arrow(s, 520, 270, 120, 270, { stroke: COL.green });
-    rect(s, 190, 255, 260, 30, { fill: hex(COL.green, 0.15), stroke: COL.green });
-    txt(s, 320, 275, "4. HTTP 200 OK + Verified Data/Stream", { anchor: "middle", size: 11, col: COL.green, weight: 700 });
+    rect(s, 155, 250, 330, 26, { fill: "#ffffff", fillStyle: "solid", stroke: COL.green, strokeWidth: 1.8 });
+    txt(s, 320, 268, zh ? "4. HTTP 200 OK (交付验证数据/流式响应)" : "4. HTTP 200 OK (Deliver Verified Stream/Data)", {
+      anchor: "middle", size: 12.5, col: COL.green, weight: 700
+    });
+    arrow(s, 530, 282, 110, 282, { stroke: COL.green, strokeWidth: 2 });
 
     // Step 6: MPP Channel Settlement
-    chip(s, 225, 305, 190, 32, zh ? "MPP 状态通道净额结算" : "MPP State Channel Netting", COL.grape, { size: 11 });
+    chip(s, 150, 308, 340, 36, zh ? "⚡ MPP 状态通道净额结算与周期性资金释放" : "⚡ MPP State Channel Netting & Escrow Release", COL.grape, {
+      size: 12.5, fill: "#ffffff"
+    });
   }
 
   // -------------------------------------------------------------
@@ -243,40 +276,40 @@
   // Slide 7 Diagram: Multi-Dimensional Threshold Engine
   // -------------------------------------------------------------
   function drawThresholdEngine(host) {
-    const s = scene(host, 660, 350);
+    const s = scene(host, 660, 360);
     const zh = isZh();
 
     // Input Action Request
-    chip(s, 25, 50, 160, 60, zh ? "智能体动作请求\n(API / 交易 / 工具)" : "Action Request\n(Tool / Tx / Call)", COL.blue, { size: 11.5 });
+    chip(s, 20, 50, 180, 65, zh ? "智能体动作请求\n(API / 交易 / 工具)" : "Action Request\n(Tool / Tx / Call)", COL.blue, { size: 12, fill: "#ffffff" });
 
     // Multi-Dimensional Threshold Evaluator
-    rect(s, 235, 30, 190, 230, { fill: hex(COL.orange, 0.08), stroke: COL.orange, strokeWidth: 2 });
-    txt(s, 330, 55, zh ? "多维门限评估网关" : "Threshold Gateway", { anchor: "middle", weight: 700, col: COL.orange, size: 13 });
+    rect(s, 230, 25, 200, 240, { fill: "#ffffff", fillStyle: "solid", stroke: COL.orange, strokeWidth: 2 });
+    txt(s, 330, 50, zh ? "多维门限评估网关" : "Threshold Gateway", { anchor: "middle", weight: 700, col: COL.orange, size: 13.5 });
 
-    chip(s, 250, 75, 160, 35, zh ? "1. 资金金额门限" : "1. Financial Cap ($)", COL.green, { size: 11 });
-    chip(s, 250, 120, 160, 35, zh ? "2. 工具风险分级" : "2. Tool Risk Tier", COL.blue, { size: 11 });
-    chip(s, 250, 165, 160, 35, zh ? "3. 速率与异常度" : "3. Velocity / Drift", COL.grape, { size: 11 });
-    chip(s, 250, 210, 160, 35, zh ? "4. 累积影响半径" : "4. Blast Radius", COL.teal, { size: 11 });
+    chip(s, 245, 68, 170, 36, zh ? "1. 资金金额门限" : "1. Financial Cap ($)", COL.green, { size: 12, fill: "#ffffff" });
+    chip(s, 245, 114, 170, 36, zh ? "2. 工具风险分级" : "2. Tool Risk Tier", COL.blue, { size: 12, fill: "#ffffff" });
+    chip(s, 245, 160, 170, 36, zh ? "3. 速率与异常度" : "3. Velocity / Drift", COL.grape, { size: 12, fill: "#ffffff" });
+    chip(s, 245, 206, 170, 36, zh ? "4. 累积影响半径" : "4. Blast Radius", COL.teal, { size: 12, fill: "#ffffff" });
 
-    arrow(s, 185, 80, 235, 80, { stroke: COL.ink });
+    arrow(s, 200, 82, 230, 82, { stroke: COL.ink, strokeWidth: 2 });
 
     // Outputs
-    arrow(s, 425, 95, 475, 70, { stroke: COL.green });
-    chip(s, 475, 45, 160, 50, zh ? "✓ 自动放行 (LOW)\n即刻执行" : "✓ Auto-Approve\nInstant Exec", COL.green, { size: 11 });
+    arrow(s, 430, 85, 460, 65, { stroke: COL.green, strokeWidth: 2 });
+    chip(s, 460, 38, 185, 55, zh ? "✓ 自动放行 (LOW)\n即刻执行" : "✓ Auto-Approve\n(Instant Exec)", COL.green, { size: 12, fill: "#ffffff" });
 
-    arrow(s, 425, 145, 475, 145, { stroke: COL.yellow });
-    chip(s, 475, 120, 160, 50, zh ? "⚠️ 双智能体复核\n(MEDIUM / $50-$500)" : "⚠️ Dual-Agent Check\n($50 - $500)", COL.yellow, { size: 11 });
+    arrow(s, 430, 142, 460, 142, { stroke: COL.yellow, strokeWidth: 2 });
+    chip(s, 460, 115, 185, 55, zh ? "⚠️ 双智能体复核\n(MEDIUM / $50-$500)" : "⚠️ Dual-Agent Check\n($50 - $500)", COL.yellow, { size: 12, fill: "#ffffff" });
 
-    arrow(s, 425, 195, 475, 220, { stroke: COL.red });
-    chip(s, 475, 195, 160, 50, zh ? "🛑 强制人工签署\n(CRITICAL / >$500)" : "🛑 Human Sign\n(High Value / Shell)", COL.red, { size: 11 });
+    arrow(s, 430, 200, 460, 218, { stroke: COL.red, strokeWidth: 2 });
+    chip(s, 460, 192, 185, 55, zh ? "🛑 强制人工签署\n(CRITICAL / >$500)" : "🛑 Human Co-Sign\n(CRITICAL / >$500)", COL.red, { size: 12, fill: "#ffffff" });
 
     // Circuit Breaker trip
-    rect(s, 20, 280, 620, 55, { fill: hex(COL.red, 0.12), stroke: COL.red, strokeWidth: 1.8 });
-    txt(s, 330, 303, zh ? "⚡ 自动熔断器 (Circuit Breaker)：任意指标越界立即触发自主权降级" : "⚡ Automated Circuit Breaker: Immediate LoA Step-Down on Anomaly", {
-      anchor: "middle", weight: 700, col: COL.red, size: 12
+    rect(s, 20, 280, 625, 56, { fill: "#ffffff", fillStyle: "solid", stroke: COL.red, strokeWidth: 2 });
+    txt(s, 332, 303, zh ? "⚡ 自动熔断器 (Circuit Breaker)：任意指标越界立即触发自主权降级" : "⚡ Automated Circuit Breaker: Immediate LoA Step-Down on Anomaly", {
+      anchor: "middle", weight: 700, col: COL.red, size: 12.5
     });
-    txt(s, 330, 323, zh ? "例如：单分钟超 10 次调用或语义漂移 > 0.4 ➔ 强制暂停智能体并回滚待处理事务" : "e.g., >10 calls/min or drift > 0.4 triggers instant pause and pending escrow freeze", {
-      anchor: "middle", size: 11, col: COL.slate
+    txt(s, 332, 324, zh ? "例如：单分钟超 10 次调用或语义漂移 > 0.4 ➔ 强制暂停智能体并冻结托管" : "e.g., >10 calls/min or drift > 0.4 triggers instant pause and pending escrow freeze", {
+      anchor: "middle", size: 11.5, col: COL.ink
     });
   }
 
@@ -284,68 +317,107 @@
   // Slide 8 Diagram: Spec-Driven Job Descriptions (SJD)
   // -------------------------------------------------------------
   function drawSJDArchitecture(host) {
-    const s = scene(host, 640, 350);
+    const s = scene(host, 640, 360);
     const zh = isZh();
 
-    // SJD Manifest
-    rect(s, 20, 40, 270, 270, { fill: "#161b26", stroke: COL.teal, strokeWidth: 2 });
-    txt(s, 155, 65, "SJD Manifest (SPEC.json)", { anchor: "middle", col: "#fff", weight: 700, size: 13, family: "'JetBrains Mono', monospace" });
+    // SJD Manifest Terminal Card (Left Box - Solid Dark IDE Terminal)
+    const bgRect = document.createElementNS(NS, "rect");
+    bgRect.setAttribute("x", 15);
+    bgRect.setAttribute("y", 25);
+    bgRect.setAttribute("width", 290);
+    bgRect.setAttribute("height", 305);
+    bgRect.setAttribute("rx", 10);
+    bgRect.setAttribute("fill", "#0f172a");
+    bgRect.setAttribute("stroke", "#0284c7");
+    bgRect.setAttribute("stroke-width", "2");
+    addNode(s, bgRect);
 
-    txt(s, 35, 95, "agent_id: \"procure-bot-01\"", { col: "#a5d8ff", size: 10.5, family: "'JetBrains Mono'" });
-    txt(s, 35, 120, "role: \"Material Procurement\"", { col: "#a5d8ff", size: 10.5, family: "'JetBrains Mono'" });
-    txt(s, 35, 145, "allowed_tools: [\"quote\", \"escrow\"]", { col: "#74c0fc", size: 10.5, family: "'JetBrains Mono'" });
-    txt(s, 35, 170, "non_goals: [\"no_shell\", \"no_wire\"]", { col: "#ff8787", size: 10.5, family: "'JetBrains Mono'" });
-    txt(s, 35, 195, "budget_cap_daily: 200.00 USDC", { col: "#b197fc", size: 10.5, family: "'JetBrains Mono'" });
-    txt(s, 35, 220, "loa_tier: 2", { col: "#69db7c", size: 10.5, family: "'JetBrains Mono'" });
-    txt(s, 35, 245, "parent_auth: 0x8a91...f3", { col: "#ffd43b", size: 10.5, family: "'JetBrains Mono'" });
-    txt(s, 35, 275, "# Zero Ambient Authority Enforced", { col: "#868e96", size: 10, family: "'JetBrains Mono'" });
+    // Terminal header bar
+    const headerRect = document.createElementNS(NS, "rect");
+    headerRect.setAttribute("x", 15);
+    headerRect.setAttribute("y", 25);
+    headerRect.setAttribute("width", 290);
+    headerRect.setAttribute("height", 32);
+    headerRect.setAttribute("rx", 10);
+    headerRect.setAttribute("fill", "#1e293b");
+    addNode(s, headerRect);
 
-    arrow(s, 290, 170, 350, 170, { stroke: COL.ink });
+    // 3 window control dots
+    const dotY = 41;
+    const d1 = document.createElementNS(NS, "circle");
+    d1.setAttribute("cx", 32); d1.setAttribute("cy", dotY); d1.setAttribute("r", 4.5); d1.setAttribute("fill", "#ef4444");
+    addNode(s, d1);
+    const d2 = document.createElementNS(NS, "circle");
+    d2.setAttribute("cx", 45); d2.setAttribute("cy", dotY); d2.setAttribute("r", 4.5); d2.setAttribute("fill", "#f59e0b");
+    addNode(s, d2);
+    const d3 = document.createElementNS(NS, "circle");
+    d3.setAttribute("cx", 58); d3.setAttribute("cy", dotY); d3.setAttribute("r", 4.5); d3.setAttribute("fill", "#10b981");
+    addNode(s, d3);
 
-    // Runtime Verification & Attenuated Token
-    rect(s, 350, 40, 270, 270, { fill: hex(COL.blue, 0.06), stroke: COL.blue, strokeWidth: 2 });
-    txt(s, 485, 65, zh ? "可信身份凭证生命周期" : "Credential Lifecycle", { anchor: "middle", weight: 700, col: COL.blue, size: 13 });
+    txt(s, 175, 46, "SPEC.json (SJD Manifest)", {
+      anchor: "middle", col: "#f8fafc", weight: 700, size: 12.5, family: "'JetBrains Mono', monospace"
+    });
 
-    chip(s, 365, 85, 240, 40, zh ? "1. 临时任务密钥对 (Ed25519)" : "1. Ephemeral Task Keypair", COL.blue, { size: 11 });
-    chip(s, 365, 135, 240, 40, zh ? "2. 细粒度衰减授权 (Macaroons)" : "2. Attenuated Delegation Token", COL.grape, { size: 11 });
-    chip(s, 365, 185, 240, 40, zh ? "3. 密码学证明绑定 (ERC-8004/DID)" : "3. Verifiable DID / Agent ID", COL.teal, { size: 11 });
-    chip(s, 365, 235, 240, 40, zh ? "4. 任务结束即刻销毁密钥" : "4. Ephemeral Zeroize on Close", COL.green, { size: 11 });
+    // High-contrast, crystal-clear code lines (font-size: 12px, bold)
+    txt(s, 28, 80, 'agent_id: "procure-bot-01"', { col: "#60a5fa", size: 12, weight: 600, family: "'JetBrains Mono'" });
+    txt(s, 28, 104, 'role: "Material Procurement"', { col: "#38bdf8", size: 12, weight: 600, family: "'JetBrains Mono'" });
+    txt(s, 28, 128, 'tools: ["quote", "escrow"]', { col: "#4ade80", size: 12, weight: 600, family: "'JetBrains Mono'" });
+    txt(s, 28, 152, 'non_goals: ["no_shell", "no_wire"]', { col: "#f87171", size: 12, weight: 700, family: "'JetBrains Mono'" });
+    txt(s, 28, 176, 'budget_daily: 200.00 USDC', { col: "#facc15", size: 12, weight: 600, family: "'JetBrains Mono'" });
+    txt(s, 28, 200, 'loa_tier: 2 (Escrow Capped)', { col: "#c084fc", size: 12, weight: 600, family: "'JetBrains Mono'" });
+    txt(s, 28, 224, 'parent_auth: 0x8a91...f3', { col: "#e2e8f0", size: 12, weight: 500, family: "'JetBrains Mono'" });
+    txt(s, 28, 256, '# 🛡️ Zero Ambient Authority', { col: "#94a3b8", size: 12, weight: 700, family: "'JetBrains Mono'" });
+    txt(s, 28, 280, '# Cryptographic Proof Anchored', { col: "#64748b", size: 11, family: "'JetBrains Mono'" });
+
+    // Arrow to right
+    arrow(s, 305, 175, 335, 175, { stroke: COL.ink, strokeWidth: 2 });
+
+    // Right card: Runtime Verification & Attenuated Token
+    rect(s, 335, 25, 290, 305, { fill: "#ffffff", fillStyle: "solid", stroke: COL.blue, strokeWidth: 2 });
+    txt(s, 480, 52, zh ? "可信身份凭证生命周期" : "Credential Lifecycle", {
+      anchor: "middle", weight: 700, col: COL.blue, size: 13.5
+    });
+
+    chip(s, 350, 72, 260, 48, zh ? "1. 临时任务密钥对 (Ed25519)" : "1. Ephemeral Keypair (Ed25519)", COL.blue, { size: 12, fill: "#ffffff" });
+    chip(s, 350, 130, 260, 48, zh ? "2. 细粒度衰减授权 (Macaroons)" : "2. Attenuated Delegation Token", COL.grape, { size: 12, fill: "#ffffff" });
+    chip(s, 350, 188, 260, 48, zh ? "3. 密码学证明绑定 (DID / SJD)" : "3. Verifiable DID / Agent ID", COL.teal, { size: 12, fill: "#ffffff" });
+    chip(s, 350, 246, 260, 48, zh ? "4. 任务结束即刻销毁密钥" : "4. Ephemeral Zeroize on Close", COL.green, { size: 12, fill: "#ffffff" });
   }
 
   // -------------------------------------------------------------
   // Slide 9 Diagram: Domain Ontology for Semantic Intent Grounding
   // -------------------------------------------------------------
   function drawDomainOntology(host) {
-    const s = scene(host, 660, 350);
+    const s = scene(host, 660, 360);
     const zh = isZh();
 
-    // Natural Language Input
-    chip(s, 25, 50, 175, 60, zh ? "模糊自然语言提示\n\"帮我平仓并结清供应商\"" : "Fuzzy User Prompt\n\"Liquidate & settle debt\"", COL.red, { size: 11 });
+    // Natural Language Input (Wider box, no text cut)
+    chip(s, 15, 45, 200, 72, zh ? "模糊自然语言输入\n(平仓并结清欠款)" : "Fuzzy User Prompt\n(\"Liquidate & Settle Debt\")", COL.red, { size: 12, fill: "#ffffff" });
 
-    arrow(s, 200, 80, 245, 80, { stroke: COL.ink });
+    arrow(s, 215, 81, 245, 81, { stroke: COL.ink, strokeWidth: 2 });
 
     // Formal Domain Ontology Engine
-    rect(s, 245, 30, 210, 280, { fill: hex(COL.grape, 0.06), stroke: COL.grape, strokeWidth: 2 });
-    txt(s, 350, 55, zh ? "金融领域本体语义图谱" : "Financial Domain Ontology", { anchor: "middle", weight: 700, col: COL.grape, size: 13 });
+    rect(s, 245, 25, 215, 295, { fill: "#ffffff", fillStyle: "solid", stroke: COL.grape, strokeWidth: 2 });
+    txt(s, 352, 50, zh ? "金融领域本体语义图谱" : "Domain Ontology Engine", { anchor: "middle", weight: 700, col: COL.grape, size: 13.5 });
 
-    chip(s, 260, 75, 180, 35, zh ? "概念实体 (Entity / Asset)" : "Entities (Asset / Order)", COL.grape, { size: 11 });
-    chip(s, 260, 120, 180, 35, zh ? "原子动作 (Action Primitives)" : "Action Primitives", COL.blue, { size: 11 });
-    chip(s, 260, 165, 180, 35, zh ? "前后置条件约束 (Invariants)" : "Pre/Post Invariants", COL.orange, { size: 11 });
-    chip(s, 260, 210, 180, 35, zh ? "状态迁移状态机 (State Graph)" : "State Machine Graph", COL.teal, { size: 11 });
-    chip(s, 260, 255, 180, 40, zh ? "消歧与注入清洗" : "Disambiguation & Sanitizer", COL.green, { size: 11 });
+    chip(s, 260, 70, 185, 36, zh ? "概念实体 (Entity / Asset)" : "Entities (Asset / Order)", COL.grape, { size: 12, fill: "#ffffff" });
+    chip(s, 260, 116, 185, 36, zh ? "原子动作 (Action Primitives)" : "Action Primitives", COL.blue, { size: 12, fill: "#ffffff" });
+    chip(s, 260, 162, 185, 36, zh ? "前后置条件约束 (Invariants)" : "Pre/Post Invariants", COL.orange, { size: 12, fill: "#ffffff" });
+    chip(s, 260, 208, 185, 36, zh ? "状态迁移状态机 (State Graph)" : "State Machine Graph", COL.teal, { size: 12, fill: "#ffffff" });
+    chip(s, 260, 254, 185, 42, zh ? "消歧与注入清洗\n(Disambiguation)" : "Disambiguation &\nSanitizer", COL.green, { size: 12, fill: "#ffffff" });
 
-    arrow(s, 455, 80, 495, 80, { stroke: COL.green });
+    arrow(s, 460, 81, 495, 81, { stroke: COL.green, strokeWidth: 2 });
 
     // Formal Intent AST
-    rect(s, 495, 40, 145, 265, { fill: "#f1f3f5", stroke: COL.teal, strokeWidth: 1.8 });
-    txt(s, 567, 65, zh ? "形式化意图树" : "Intent AST", { anchor: "middle", weight: 700, col: COL.teal, size: 12 });
-    txt(s, 505, 95, "Intent: Settle", { size: 10.5, family: "'JetBrains Mono'" });
-    txt(s, 505, 120, "Asset: USDC", { size: 10.5, family: "'JetBrains Mono'" });
-    txt(s, 505, 145, "MaxSlip: 0.5%", { size: 10.5, family: "'JetBrains Mono'" });
-    txt(s, 505, 170, "Vendor: 0x9f..", { size: 10.5, family: "'JetBrains Mono'" });
-    txt(s, 505, 195, "Cap: $150", { size: 10.5, family: "'JetBrains Mono'" });
-    txt(s, 505, 230, zh ? "✓ 拦截越权语义" : "✓ No semantic drift", { size: 10, col: COL.green, weight: 700 });
-    txt(s, 505, 255, zh ? "✓ 阻断越界注入" : "✓ Injection blocked", { size: 10, col: COL.green, weight: 700 });
+    rect(s, 495, 25, 150, 295, { fill: "#ffffff", fillStyle: "solid", stroke: COL.teal, strokeWidth: 2 });
+    txt(s, 570, 50, zh ? "形式化意图树" : "Intent AST", { anchor: "middle", weight: 700, col: COL.teal, size: 13 });
+    txt(s, 508, 80, "Intent: Settle", { size: 12, weight: 600, family: "'JetBrains Mono'" });
+    txt(s, 508, 106, "Asset: USDC", { size: 12, weight: 600, family: "'JetBrains Mono'" });
+    txt(s, 508, 132, "MaxSlip: 0.5%", { size: 12, weight: 600, family: "'JetBrains Mono'" });
+    txt(s, 508, 158, "Vendor: 0x9f..", { size: 12, weight: 600, family: "'JetBrains Mono'" });
+    txt(s, 508, 184, "Cap: $150", { size: 12, weight: 600, family: "'JetBrains Mono'" });
+    txt(s, 508, 225, zh ? "✓ 拦截越权语义" : "✓ No semantic drift", { size: 11.5, col: COL.green, weight: 700 });
+    txt(s, 508, 252, zh ? "✓ 阻断越界注入" : "✓ Injection blocked", { size: 11.5, col: COL.green, weight: 700 });
   }
 
   // -------------------------------------------------------------
@@ -422,41 +494,47 @@
   // Slide 12 Diagram: 3-Tier Defensive Memory Architecture
   // -------------------------------------------------------------
   function drawMemoryHygiene(host) {
-    const s = scene(host, 640, 350);
+    const s = scene(host, 660, 360);
     const zh = isZh();
 
-    // Ingestion
-    chip(s, 20, 40, 140, 60, zh ? "外部信息摄入\n(网页/API/文档)" : "Untrusted Ingestion\n(Web/API/Docs)", COL.slate, { size: 11 });
+    // Ingestion (Left Box - widened to 185px, solid white background, bold text)
+    chip(s, 15, 35, 185, 70, zh ? "外部不可信信息摄入\n(网页 / API / 文档)" : "Untrusted Ingestion\n(Web / API / Docs)", COL.slate, { size: 12, fill: "#ffffff" });
 
-    arrow(s, 160, 70, 215, 70, { stroke: COL.ink });
+    arrow(s, 200, 70, 225, 70, { stroke: COL.ink, strokeWidth: 2 });
 
     // Tier 1: Ephemeral
-    chip(s, 215, 40, 175, 60, zh ? "Tier 1: 临时工作记忆\n(任务结束即刻清空)" : "Tier 1: Ephemeral\n(Zeroized on end)", COL.blue, { size: 11 });
+    chip(s, 225, 35, 195, 70, zh ? "Tier 1: 临时工作记忆\n(任务结束即刻清空)" : "Tier 1: Ephemeral Memory\n(Zeroized on end)", COL.blue, { size: 12, fill: "#ffffff" });
 
-    arrow(s, 302, 100, 302, 140, { stroke: COL.ink });
+    arrow(s, 322, 105, 322, 130, { stroke: COL.ink, strokeWidth: 2 });
 
     // Tier 2: Quarantined
-    rect(s, 205, 140, 195, 80, { fill: hex(COL.orange, 0.1), stroke: COL.orange, strokeWidth: 2 });
-    txt(s, 302, 165, zh ? "Tier 2: 隔离检验缓冲区" : "Tier 2: Quarantined Buffer", { anchor: "middle", weight: 700, col: COL.orange, size: 12 });
-    txt(s, 302, 185, zh ? "• 溯源信誉核验 (Provenance)" : "• Provenance Signature Check", { anchor: "middle", size: 10.5 });
-    txt(s, 302, 205, zh ? "• 冲突消除引擎 (CRDTs)" : "• Conflict Reconciliation / TTL", { anchor: "middle", size: 10.5 });
+    rect(s, 215, 130, 215, 95, { fill: "#ffffff", fillStyle: "solid", stroke: COL.orange, strokeWidth: 2 });
+    txt(s, 322, 152, zh ? "Tier 2: 隔离检验缓冲区" : "Tier 2: Quarantined Buffer", { anchor: "middle", weight: 700, col: COL.orange, size: 12.5 });
+    txt(s, 322, 178, zh ? "• 密码学溯源核验 (Provenance)" : "• Provenance Signature Check", { anchor: "middle", size: 11.5, weight: 600 });
+    txt(s, 322, 202, zh ? "• 冲突消除与 TTL (CRDTs)" : "• Conflict Reconciliation / TTL", { anchor: "middle", size: 11.5, weight: 600 });
 
-    arrow(s, 302, 220, 302, 260, { stroke: COL.green });
+    arrow(s, 322, 225, 322, 250, { stroke: COL.green, strokeWidth: 2 });
 
     // Tier 3: Verified Long Term
-    chip(s, 215, 260, 175, 60, zh ? "Tier 3: 已验证可信长期存储\n(只追加/共识签名)" : "Tier 3: Verified Long-Term\n(Immutable / Signed)", COL.green, { size: 11 });
+    chip(s, 225, 250, 195, 70, zh ? "Tier 3: 已验证可信长期存储\n(只追加 / 共识签名)" : "Tier 3: Verified Long-Term\n(Append-Only / Signed)", COL.green, { size: 12, fill: "#ffffff" });
 
-    // Hygiene Rules sidebar
-    rect(s, 425, 40, 195, 280, { fill: hex(COL.teal, 0.06), stroke: COL.teal, strokeWidth: 1.8 });
-    txt(s, 522, 65, zh ? "记忆卫生防护法则" : "Memory Invariants", { anchor: "middle", weight: 700, col: COL.teal, size: 13 });
-    txt(s, 435, 95, zh ? "1. 密码学来源标签" : "1. Cryptographic Tags", { size: 11, weight: 700, col: COL.teal });
-    txt(s, 435, 115, zh ? "谁写入、何时写、哈希值" : "Author, timestamp, hash", { size: 10 });
-    txt(s, 435, 145, zh ? "2. 严格 TTL 动态过期" : "2. Strict TTL Expiry", { size: 11, weight: 700, col: COL.teal });
-    txt(s, 435, 165, zh ? "报价30秒，凭证15分" : "Prices 30s, tokens 15m", { size: 10 });
-    txt(s, 435, 195, zh ? "3. 确定性冲突仲裁" : "3. Deterministic Arb", { size: 11, weight: 700, col: COL.teal });
-    txt(s, 435, 215, zh ? "本体优先序判定真伪" : "Ontological precedence", { size: 10 });
-    txt(s, 435, 245, zh ? "4. 拒绝外部直写长期库" : "4. Zero Direct Writes", { size: 11, weight: 700, col: COL.red });
-    txt(s, 435, 265, zh ? "不可信内容绝不可固化" : "No untrusted persistence", { size: 10 });
+    // Hygiene Rules sidebar (Right Card - solid white, crystal-clear high contrast)
+    rect(s, 440, 25, 205, 305, { fill: "#ffffff", fillStyle: "solid", stroke: COL.teal, strokeWidth: 2 });
+    txt(s, 542, 50, zh ? "记忆卫生防护法则" : "Memory Invariants", { anchor: "middle", weight: 700, col: COL.teal, size: 13.5 });
+
+    txt(s, 452, 78, zh ? "1. 密码学来源标签" : "1. Cryptographic Tags", { size: 12, weight: 700, col: COL.teal });
+    txt(s, 452, 98, zh ? "签名者、时间戳与哈希" : "Author, timestamp, hash", { size: 11, col: COL.ink });
+
+    txt(s, 452, 130, zh ? "2. 严格 TTL 动态过期" : "2. Strict TTL Expiry", { size: 12, weight: 700, col: COL.teal });
+    txt(s, 452, 150, zh ? "报价 30 秒，凭证 15 分钟" : "Quotes 30s, tokens 15m", { size: 11, col: COL.ink });
+
+    txt(s, 452, 182, zh ? "3. 确定性冲突仲裁" : "3. Deterministic Arb", { size: 12, weight: 700, col: COL.teal });
+    txt(s, 452, 202, zh ? "领域本体优先序判别真伪" : "Ontological precedence", { size: 11, col: COL.ink });
+
+    txt(s, 452, 234, zh ? "4. 零外部直写长期库" : "4. Zero Direct Writes", { size: 12, weight: 700, col: COL.red });
+    txt(s, 452, 254, zh ? "不可信数据绝不进入长期库" : "No untrusted persistence", { size: 11, col: COL.red });
+
+    txt(s, 452, 286, zh ? "🛡️ 向量数据库严格隔离" : "🛡️ Strict Vector DB Isolation", { size: 11.5, weight: 700, col: COL.blue });
   }
 
   // -------------------------------------------------------------
@@ -502,39 +580,49 @@
   // Slide 14 Diagram: Active Runtime Steering & Control Plane
   // -------------------------------------------------------------
   function drawRuntimeSteering(host) {
-    const s = scene(host, 660, 350);
+    const s = scene(host, 660, 360);
     const zh = isZh();
 
-    // LLM Agent
-    rect(s, 25, 40, 155, 260, { fill: hex(COL.blue, 0.06), stroke: COL.blue, strokeWidth: 2 });
-    txt(s, 102, 70, zh ? "智能体认知核心" : "Agent Core", { anchor: "middle", weight: 700, col: COL.blue, size: 13 });
-    txt(s, 35, 105, "Thought: ...", { size: 10.5, family: "'JetBrains Mono'" });
-    txt(s, 35, 130, "Intent: Pay", { size: 10.5, family: "'JetBrains Mono'" });
-    txt(s, 35, 155, "Tool: transfer", { size: 10.5, family: "'JetBrains Mono'" });
-    txt(s, 35, 180, "Args: {to, amt}", { size: 10.5, family: "'JetBrains Mono'" });
-    txt(s, 35, 225, zh ? "外部控制挂钩" : "Out-of-band Hook", { size: 10, col: COL.slate });
+    // 1. Left Card: Agent Reasoning Core (Solid White Card with Blue Accents)
+    rect(s, 15, 20, 185, 315, { fill: "#ffffff", fillStyle: "solid", stroke: COL.blue, strokeWidth: 2 });
+    txt(s, 107, 45, zh ? "🧠 智能体推理核心" : "🧠 Agent Reasoning Core", { anchor: "middle", weight: 700, col: COL.blue, size: 12.5 });
 
-    arrow(s, 180, 160, 230, 160, { stroke: COL.ink });
+    chip(s, 25, 65, 165, 32, "Thought: Plan Order", COL.blue, { size: 11, fill: "#ffffff" });
+    chip(s, 25, 103, 165, 32, "Intent: Escrow Settle", COL.blue, { size: 11, fill: "#ffffff" });
+    chip(s, 25, 141, 165, 32, "Tool: x402_pay()", COL.grape, { size: 11, fill: "#ffffff" });
+    chip(s, 25, 179, 165, 32, "Args: {to, $120 USDC}", COL.teal, { size: 11, fill: "#ffffff" });
 
-    // Active Control Gateway (Pre & Post Hook)
-    rect(s, 230, 30, 215, 280, { fill: hex(COL.red, 0.06), stroke: COL.red, strokeWidth: 2.2 });
-    txt(s, 337, 55, zh ? "🛡️ 确定性运行时网关" : "🛡️ Deterministic Gateway", { anchor: "middle", weight: 700, col: COL.red, size: 13 });
+    chip(s, 25, 222, 165, 48, zh ? "⚠️ 待放行动作请求\n(Zero Ambient Auth)" : "⚠️ Action Request\n(Pending Gateway Check)", COL.orange, { size: 11, fill: "#ffffff" });
+    txt(s, 107, 305, zh ? "零环境执行特权" : "Zero Ambient Privilege", { anchor: "middle", size: 11, col: COL.slate, weight: 600 });
 
-    chip(s, 245, 75, 185, 40, zh ? "PreToolUse 拦截器\n(参数校验/限额/签名)" : "PreToolUse Hook\n(Schema & IBAC Check)", COL.red, { size: 10.5 });
-    chip(s, 245, 125, 185, 35, zh ? "动态策略仲裁 (Policy)" : "Dynamic Policy Arbiter", COL.orange, { size: 10.5 });
-    chip(s, 245, 170, 185, 40, zh ? "PostToolUse 净化器\n(脱敏/抹除注入指令)" : "PostToolUse Sanitizer\n(Strip Injection Payloads)", COL.green, { size: 10.5 });
+    // Arrow to Gateway
+    arrow(s, 200, 177, 225, 177, { stroke: COL.ink, strokeWidth: 2 });
 
-    // Actions
-    txt(s, 337, 230, zh ? "网关裁决动作：" : "Gateway Decision Primitives:", { anchor: "middle", size: 10.5, weight: 700 });
-    txt(s, 250, 250, "• APPROVE / MODIFY", { size: 10, col: COL.green, weight: 700 });
-    txt(s, 250, 268, "• STEER / RE-PROMPT", { size: 10, col: COL.blue, weight: 700 });
-    txt(s, 250, 286, "• STEP-DOWN / KILL", { size: 10, col: COL.red, weight: 700 });
+    // 2. Center Card: Deterministic Control Gateway (Solid White Card with Red Accents)
+    rect(s, 225, 20, 240, 315, { fill: "#ffffff", fillStyle: "solid", stroke: COL.red, strokeWidth: 2.2 });
+    txt(s, 345, 45, zh ? "🛡️ 确定性运行时控制网关" : "🛡️ Deterministic Control Plane", { anchor: "middle", weight: 700, col: COL.red, size: 12.5 });
 
-    arrow(s, 445, 95, 485, 95, { stroke: COL.green });
+    chip(s, 235, 65, 220, 40, zh ? "1. PreToolUse 拦截核验\n(Schema / 限额 / SJD 意图)" : "1. PreToolUse Interceptor\n(Schema / Invariants / SJD)", COL.red, { size: 11.5, fill: "#ffffff" });
+    chip(s, 235, 112, 220, 38, zh ? "2. 动态策略与风控仲裁\n(Policy Arbiter)" : "2. Dynamic Policy Arbiter\n(Dual-Agent / Escalation)", COL.orange, { size: 11.5, fill: "#ffffff" });
+    chip(s, 235, 156, 220, 40, zh ? "3. PostToolUse 脱敏净化\n(抹除注入 / 隐藏凭据)" : "3. PostToolUse Sanitizer\n(Strip Injection Payloads)", COL.teal, { size: 11.5, fill: "#ffffff" });
 
-    // Target Environments
-    chip(s, 485, 60, 150, 65, zh ? "真实外部系统\n(银行/区块链/API)" : "External Rails\n(Bank / Chain / API)", COL.green, { size: 11 });
-    chip(s, 485, 180, 150, 65, zh ? "隔离沙箱工作区\n(Worktree / Git)" : "Sandbox Worktree\n(Isolated Testbed)", COL.teal, { size: 11 });
+    // Sub-box inside Gateway: Decision Primitives
+    rect(s, 235, 204, 220, 120, { fill: "#f8fafc", fillStyle: "solid", stroke: COL.ink, strokeWidth: 1.2 });
+    txt(s, 345, 222, zh ? "网关四项确定性裁决动作" : "4 Deterministic Decision Actions", { anchor: "middle", size: 11.5, weight: 700, col: COL.ink });
+    txt(s, 245, 244, zh ? "• APPROVE: 放行合规请求" : "• APPROVE: Allow valid call", { size: 11, col: COL.green, weight: 700 });
+    txt(s, 245, 266, zh ? "• STEER: 重写参数/注入提示" : "• STEER: Mutate / Re-prompt", { size: 11, col: COL.blue, weight: 700 });
+    txt(s, 245, 288, zh ? "• SANDBOX: 重定向至沙箱" : "• SANDBOX: Divert to testbed", { size: 11, col: COL.teal, weight: 700 });
+    txt(s, 245, 310, zh ? "• KILL: 吊销凭据硬熔断" : "• KILL: Circuit break & freeze", { size: 11, col: COL.red, weight: 700 });
+
+    // 3 Arrows to Target Outcomes
+    arrow(s, 465, 85, 495, 85, { stroke: COL.green, strokeWidth: 2 });
+    arrow(s, 465, 175, 495, 175, { stroke: COL.teal, strokeWidth: 2 });
+    arrow(s, 465, 265, 495, 265, { stroke: COL.red, strokeWidth: 2 });
+
+    // 3. Right Column: 3 Target Outcome Cards
+    chip(s, 495, 55, 155, 62, zh ? "✓ 真实生产环境\n(银行/区块链/API)" : "✓ Production Rails\n(Bank / Chain / API)", COL.green, { size: 11.5, fill: "#ffffff" });
+    chip(s, 495, 145, 155, 62, zh ? "⚡ 隔离沙箱工作区\n(Worktree 影子试运行)" : "⚡ Sandbox Worktree\n(Isolated Shadow Run)", COL.teal, { size: 11.5, fill: "#ffffff" });
+    chip(s, 495, 235, 155, 62, zh ? "🛑 硬熔断与冻结\n(吊销密钥 & 冻结托管)" : "🛑 Hard Kill Switch\n(Revoke Token & Freeze)", COL.red, { size: 11.5, fill: "#ffffff" });
   }
 
   // -------------------------------------------------------------
