@@ -1,10 +1,12 @@
 # Agentic Commerce & Agentic Security Foundations
 
+🌐 **Live GitHub Pages Website:** [https://kenhuangus.github.io/agent-commerce-security-site/](https://kenhuangus.github.io/agent-commerce-security-site/)
+
 A publication-grade, self-contained, GitHub Pages-ready **16-slide interactive presentation deck** on Agentic Commerce Security Foundations, Autonomous Governance, Intent-Based Access Control (IBAC), Memory Hygiene, and Runtime Steering.
 
 Modeled on the architecture and visual design system of [MAESTRO](https://kenhuangus.github.io/maestro-site/).
 
-Presented by **Ken Huang, CISSP** — Adjunct Professor, University of San Francisco (USF); CSA Fellow & Co-Chair of CSA AI Safety Working Groups; OWASP AIVSS Project Lead; CEO of DistributedApps.ai.
+Presented by **黄连金 (Ken Huang), CISSP** — Adjunct Professor, University of San Francisco (USF); CSA Fellow & Co-Chair of CSA AI Safety Working Groups; OWASP AIVSS Project Lead; CEO of DistributedApps.ai.
 
 ---
 
