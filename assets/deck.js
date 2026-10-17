@@ -1,6 +1,6 @@
 /* ============================================================
-   Agent Commerce & Agentic Security Foundations — Deck Navigation
-   Supports 15 slides, keyboard, swipe, wheel, hash deep links & i18n
+   Agentic Commerce & Agentic Security Foundations — Deck Navigation
+   Supports 16 slides, keyboard, swipe, wheel, hash deep links & i18n
    ============================================================ */
 (function () {
   const slides = Array.from(document.querySelectorAll(".slide"));

@@ -1,6 +1,6 @@
-# Agent Commerce & Agentic Security Foundations
+# Agentic Commerce & Agentic Security Foundations
 
-A publication-grade, self-contained, GitHub Pages-ready **15-slide interactive presentation deck** on Agent Commerce Security Foundations, Autonomous Governance, Intent-Based Access Control (IBAC), and Memory Hygiene.
+A publication-grade, self-contained, GitHub Pages-ready **16-slide interactive presentation deck** on Agentic Commerce Security Foundations, Autonomous Governance, Intent-Based Access Control (IBAC), Memory Hygiene, and Runtime Steering.
 
 Modeled on the architecture and visual design system of [MAESTRO](https://kenhuangus.github.io/maestro-site/).
 
@@ -8,11 +8,11 @@ Presented by **Ken Huang, CISSP** — Adjunct Professor, University of San Franc
 
 ---
 
-## 15 Slides Overview
+## 16 Slides Overview
 
-1. **Title Cover / Hero**: Architectural overview of Agent Commerce & Agentic Security Foundations.
+1. **Title Cover / Hero**: Architectural overview of Agentic Commerce & Agentic Security Foundations.
 2. **About the Speaker & Research Foundation**: Credentials, academic posts, and publications.
-3. **Agent Commerce Paradigm & Threat Landscape**: M2M autonomous financial execution vs. Web2 e-commerce.
+3. **Agentic Commerce Paradigm & Threat Landscape**: M2M autonomous financial execution vs. Web2 e-commerce.
 4. **Modern Agent Payment Protocols**: HTTP 402/x402, Metered Payment Protocol (MPP), and A2A-Pay (ERC-8004).
 5. **Financial Security Contracts & Cryptographic Invariants**: Conditional escrow, timelocks, slashing, and spend velocity caps.
 6. **Autonomy Governance (Levels of Autonomy)**: Formal 6-tier LoA 0 to LoA 5 operational taxonomy.
@@ -24,7 +24,8 @@ Presented by **Ken Huang, CISSP** — Adjunct Professor, University of San Franc
 12. **Memory Hygiene Architecture**: Provenance attestation, 3-tier memory model (Ephemeral, Quarantined Buffer, Long-Term), and TTL invalidation.
 13. **Behavioral Observability & Trajectory Monitoring**: OTel GenAI semantic DAG tracing, semantic drift scoring, and loop interception.
 14. **Runtime Steering & Active Policy Interception**: Deterministic PreToolUse/PostToolUse hooks, out-of-band steering, step-down, and kill switches.
-15. **Evaluation, Benchmarks & Token Efficiency Optimization**: Task Completion Rate (TCR), 100% Invariant Compliance, and context-pruned token ROI.
+15. **Evaluation, Benchmarks & Token Efficiency Optimization**: Task Completion Rate (TCR), 100% Invariant Compliance, and context-pruned token ROI (White Background).
+16. **Summary & Open Q/A**: 6 Core Defense Pillars synthesis, interactive audience discussion prompts, and research collaborations.
 
 ---
 
@@ -35,7 +36,7 @@ Presented by **Ken Huang, CISSP** — Adjunct Professor, University of San Franc
 - **Jump to Start / End:** `Home` / `End`
 - **Fullscreen Mode:** `F` or click `Full Screen`
 - **Language Switcher:** Click `EN` or `中文` in the header bar
-- **Hash Deep Linking:** Link directly to any slide via URL hash (e.g. `#1` to `#15`)
+- **Hash Deep Linking:** Link directly to any slide via URL hash (e.g. `#1` to `#16`)
 - **Swipe / Wheel:** Touch swipe on mobile or debounced scroll wheel on desktop
 
 ---

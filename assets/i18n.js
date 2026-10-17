@@ -1,6 +1,6 @@
 /* ============================================================
-   Agent Commerce & Agentic Security Foundations — Bilingual i18n
-   Full English and Chinese translations for all 15 slides
+   Agentic Commerce & Agentic Security Foundations — Bilingual i18n
+   Full English and Chinese translations for all 16 slides
    ============================================================ */
 (function () {
   const DICT = {
@@ -12,7 +12,7 @@
       "ui.launch": "Documentation ↗",
       "ui.repo": "GitHub Repo ↗",
 
-      "slide.1.title": "Agent Commerce & Security Foundations",
+      "slide.1.title": "Agentic Commerce & Security Foundations",
       "slide.2.title": "About the Instructor: Ken Huang, CISSP",
       "slide.3.title": "Commerce Threat Landscape",
       "slide.4.title": "Modern Payment Protocols",
@@ -27,10 +27,11 @@
       "slide.13.title": "Behavioral Observability & Trajectory",
       "slide.14.title": "Runtime Steering & Control Plane",
       "slide.15.title": "Evaluation, Benchmarks & Token ROI",
+      "slide.16.title": "Summary & Open Q/A: Foundations of Agentic Commerce Security",
 
       // Slide 1
       "hero.eyebrow": "Autonomous Systems & Agentic Commerce Security",
-      "hero.title": "AGENT COMMERCE & AGENTIC SECURITY",
+      "hero.title": "AGENTIC COMMERCE & AGENTIC SECURITY",
       "hero.acronym": "<b>P</b>ayment Protocols · <b>S</b>mart Contracts · <b>A</b>utonomy · <b>I</b>BAC · <b>M</b>emory · <b>O</b>bservability",
       "hero.sub": "The Definitive <strong>Foundations & Architecture Blueprint</strong> for Securing Autonomous Financial Execution and Agent Behavior",
       "hero.by": "Presented by <strong>Ken Huang, CISSP</strong><br/>Adjunct Professor, University of San Francisco (USF) · Fellow & Co-Chair, CSA AI Safety Working Groups · CEO, DistributedApps.ai",
@@ -54,9 +55,9 @@
 
       // Slide 3
       "s3.kicker": "The Financial Frontier",
-      "s3.h2": "The Agent Commerce Paradigm & Attack Surface",
+      "s3.h2": "The Agentic Commerce Paradigm & Attack Surface",
       "s3.lead": "Autonomous agents executing machine-to-machine financial transactions introduce severe systemic risks where prompt manipulation directly triggers irreversible monetary loss.",
-      "s3.th1": "Dimension", "s3.th2": "Web2 E-Commerce (Human)", "s3.th3": "Autonomous Agent Commerce (M2M)",
+      "s3.th1": "Dimension", "s3.th2": "Web2 E-Commerce (Human)", "s3.th3": "Autonomous Agentic Commerce (M2M)",
       "s3.r1_d": "Initiator & Auth", "s3.r1_trad": "Human via browser, 2FA/MFA, Session cookie", "s3.r1_agent": "Autonomous LLM with wallet private keys & API credentials",
       "s3.r2_d": "Velocity & Latency", "s3.r2_trad": "Minutes per checkout, manual form input", "s3.r2_agent": "Milliseconds per API call, automated high-frequency stream",
       "s3.r3_d": "Primary Threat", "s3.r3_trad": "Phishing, credential stuffing, chargeback fraud", "s3.r3_agent": "Indirect prompt injection, goal hijacking, wallet drain",
@@ -65,12 +66,12 @@
       // Slide 4
       "s4.kicker": "Machine-to-Machine Rails",
       "s4.h2": "Modern Agent Payment Protocols: The Modern Rail Stack",
-      "s4.lead": "Agent commerce requires micro-metered, low-latency, non-custodial payment rails eliminating human checkout friction while enforcing cryptographic non-repudiation.",
+      "s4.lead": "Agentic commerce requires micro-metered, low-latency, non-custodial payment rails eliminating human checkout friction while enforcing cryptographic non-repudiation.",
 
       // Slide 5
       "s5.kicker": "Programmable Trust",
       "s5.h2": "Financial Security Contracts & Cryptographic Invariants",
-      "s5.lead": "Smart contracts in agent commerce must enforce hard mathematical invariants that cannot be overridden by LLM hallucinations or adversarial prompt manipulation.",
+      "s5.lead": "Smart contracts in agentic commerce must enforce hard mathematical invariants that cannot be overridden by LLM hallucinations or adversarial prompt manipulation.",
 
       // Slide 6
       "s6.kicker": "The Autonomy Spectrum",
@@ -120,7 +121,25 @@
       // Slide 15
       "s15.kicker": "Performance & Economics",
       "s15.h2": "Evaluation, Benchmarks & Token Efficiency Optimization",
-      "s15.lead": "Enterprise agent systems must optimize both safety and unit economics. Measuring Task Completion Rate against Token Efficiency reveals the true cost-per-outcome of secure autonomous systems."
+      "s15.lead": "Enterprise agent systems must optimize both safety and unit economics. Measuring Task Completion Rate against Token Efficiency reveals the true cost-per-outcome of secure autonomous systems.",
+
+      // Slide 16
+      "s16.kicker": "Synthesis & Discussion",
+      "s16.h2": "Summary & Open Q/A: Foundations of Agentic Commerce Security",
+      "s16.lead": "Autonomous financial execution requires defense-in-depth across payment protocols, mathematical invariants, bounded autonomy, domain ontology, memory hygiene, and continuous runtime steering.",
+      "s16.takeaways_title": "6 Pillars of Agentic Security",
+      "s16.p1_t": "Payment Rails:", "s16.p1_d": "Non-custodial x402 and MPP channels enable micro-metered settlement with zero human checkout friction.",
+      "s16.p2_t": "Smart Contracts:", "s16.p2_d": "Mathematical on-chain invariants strictly bound spending caps, preventing LLM prompt overrides.",
+      "s16.p3_t": "Autonomy Governance:", "s16.p3_d": "LoA 0–5 tiered bounding with deterministic circuit breakers that force dynamic step-downs.",
+      "s16.p4_t": "Identity & IBAC:", "s16.p4_d": "Spec-Driven Job Descriptions (SJD) and single-use capability tokens eliminate ambient authority.",
+      "s16.p5_t": "Memory Hygiene:", "s16.p5_d": "Cryptographic provenance signatures and time-to-live expirations prevent poisoning and semantic drift.",
+      "s16.p6_t": "Observability & Steering:", "s16.p6_d": "Out-of-band PreToolUse interceptors and kill-switches halt unauthorized trajectories in real time.",
+      "s16.qa_title": "Interactive Discussion Prompts",
+      "s16.q1_t": "Channel Settlement vs Per-Request:", "s16.q1_d": "When should high-frequency agentic commerce switch from atomic HTTP 402 to cumulative state channels (MPP)?",
+      "s16.q2_t": "Autonomous Blast Radius:", "s16.q2_d": "How do enterprise teams establish mathematically provable containment before elevating agents to LoA 3+?",
+      "s16.q3_t": "Memory Contamination Isolation:", "s16.q3_d": "What runtime validation prevents an untrusted merchant quote from corrupting episodic agent memory?",
+      "s16.author_lead": "Connect & Collaborate:",
+      "s16.author_desc": "Ken Huang, CISSP · Adjunct Professor, University of San Francisco (USF) · Fellow & Co-Chair, CSA AI Safety · CEO, DistributedApps.ai"
     },
     zh: {
       "ui.fullscreen": "全屏演示",
@@ -130,7 +149,7 @@
       "ui.launch": "技术文档 ↗",
       "ui.repo": "GitHub 代码仓 ↗",
 
-      "slide.1.title": "智能体商业与安全基础",
+      "slide.1.title": "智能体商业与自主安全体系",
       "slide.2.title": "关于讲师：黄健 (Ken Huang), CISSP",
       "slide.3.title": "智能体商业威胁全景",
       "slide.4.title": "现代智能体支付协议",
@@ -145,6 +164,7 @@
       "slide.13.title": "行为可观测性与轨迹监控",
       "slide.14.title": "运行时引导与动态控制面",
       "slide.15.title": "评估基准与 Token 效能优化",
+      "slide.16.title": "核心总结与互动问答：智能体商业安全",
 
       // Slide 1
       "hero.eyebrow": "自主系统与智能体商业安全",
@@ -238,7 +258,25 @@
       // Slide 15
       "s15.kicker": "性能与经济学平衡",
       "s15.h2": "评估基准、效能评测与 Token 投入产出比",
-      "s15.lead": "企业级智能体系统必须同时优化安全性和单位经济效益。通过任务完成率与 Token 效能矩阵，揭示真实商业产出成本。"
+      "s15.lead": "企业级智能体系统必须同时优化安全性和单位经济效益。通过任务完成率与 Token 效能矩阵，揭示真实商业产出成本。",
+
+      // Slide 16
+      "s16.kicker": "总结与问答互动",
+      "s16.h2": "核心总结与互动问答：构建安全可信的智能体商业未来",
+      "s16.lead": "自主金融执行需要横跨支付协议、数学不变量、边界自主、领域本体、记忆卫生与连续运行时引导的纵深防御体系。",
+      "s16.takeaways_title": "智能体安全六大核心支柱",
+      "s16.p1_t": "支付协议栈：", "s16.p1_d": "非托管 x402 与 MPP 通道实现微计量即时结算，消除人工结账摩擦。",
+      "s16.p2_t": "智能合约防护：", "s16.p2_d": "链上数学不变量严格约束资金限额，免疫提示词恶意越权覆盖。",
+      "s16.p3_t": "自主权治理：", "s16.p3_d": "LoA 0–5 分级边界与确定性熔断器，支持异常时动态降级。",
+      "s16.p4_t": "身份与意图访问控制：", "s16.p4_d": "规范驱动岗位描述 (SJD) 与单次能力代币，彻底终结环境隐式特权。",
+      "s16.p5_t": "记忆认知卫生：", "s16.p5_d": "密码学溯源签名与 TTL 自动失效，杜绝认知投毒与语义漂移。",
+      "s16.p6_t": "可观测性与控制面：", "s16.p6_d": "带外 PreToolUse 拦截器与熔断终止开关，毫秒级阻断恶意轨迹。",
+      "s16.qa_title": "核心讨论与架构思考",
+      "s16.q1_t": "通道结算 vs 单次请求：", "s16.q1_d": "高频智能体交易何时应从单次 HTTP 402 切换至累积状态通道 (MPP)？",
+      "s16.q2_t": "自主爆炸半径控制：", "s16.q2_d": "企业团队如何在将智能体提升至 LoA 3+ 之前建立数学上可证明的遏制机制？",
+      "s16.q3_t": "记忆污染隔离：", "s16.q3_d": "采用何种运行时校验机制可防止不可信商户报价污染智能体情景记忆？",
+      "s16.author_lead": "专家联络与深入合作：",
+      "s16.author_desc": "Ken Huang, CISSP · 旧金山大学 (USF) 客座教授 · CSA AI 安全工作组 Fellow 兼联合主席 · DistributedApps.ai CEO"
     }
   };
 
