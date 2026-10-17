@@ -16,6 +16,12 @@ This 16-slide presentation defines technical security architecture for autonomou
 
 ---
 
+## About the Author: Ken Huang, CISSP
+
+**黄连金 (Ken Huang), CISSP** is an [Adjunct Professor at the University of San Francisco (USF)](https://www.usfca.edu/faculty/ken-huang) and CEO of [DistributedApps.ai](https://distributedapps.ai/). He serves as Fellow and Co-Chair of Cloud Security Alliance (CSA) AI Safety Working Groups—co-authoring the [MAESTRO](https://cloudsecurityalliance.org/blog/2025/02/06/agentic-ai-threat-modeling-framework-maestro) Agentic AI Threat Modeling Framework—and leads the OWASP AI Verification and Security Standard (AIVSS) project. An author of books on AI security and agent systems with Springer, Cambridge, Wiley, and Packt (including *Agentic AI: Theories and Practices* [Springer, 2025] and *Generative AI Security* [Springer, 2024]), his research centers on machine-to-machine payment protocol security, cryptographic contract invariants, Intent-Based Access Control (IBAC), and runtime steering for autonomous multi-agent environments.
+
+---
+
 ## 16 Slides Overview
 
 1. **Title Cover / Hero**: Architectural overview of Agentic Commerce & Agentic Security Foundations.
