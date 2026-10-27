@@ -30,14 +30,15 @@ with sync_playwright() as p:
             page.screenshot(path=screenshot_path)
             
             # Audit slide: SVG text nodes, bullet count, and vertical overflow
-            result = page.evaluate("""() => {
+            result = page.evaluate("""(slideNum) => {
                 const activeSlide = document.querySelector('.slide.is-active');
-                if (!activeSlide) return { texts: [], overflows: [], bulletCount: 0, slideOverflow: false };
+                if (!activeSlide) return { texts: [], overflows: [], bulletCount: 0, slideOverflow: false, maxAllowed: 3 };
                 
-                // Check bullet count (max 3 points rule)
+                // Check bullet count (max {result['maxAllowed']} points rule for slides 1-15, exactly 6 pillars on slide 16)
                 const cleanList = activeSlide.querySelectorAll('.clean-list > li');
                 const mainBullets = activeSlide.querySelectorAll('.main-bullets > li');
                 const bulletCount = cleanList.length || mainBullets.length || 0;
+                const maxAllowed = (slideNum === 16) ? 6 : 3;
                 
                 // Check vertical overflow of slide content
                 const slideIn = activeSlide.querySelector('.slide__in');
@@ -104,24 +105,25 @@ with sync_playwright() as p:
                 });
                 
                 return { 
+                    maxAllowed: maxAllowed,
                     texts: textNodes, 
                     overflows: overflows, 
                     bulletCount: bulletCount, 
                     slideOverflow: slideOverflow 
                 };
-            }""")
+            }""", slide_num)
             
             small_count = sum(1 for t in result['texts'] if t['isSmall'])
             clip_count = sum(1 for t in result['texts'] if t['isClipped'])
             bullet_count = result['bulletCount']
             slide_overflow = result['slideOverflow']
             
-            status_str = f"Slide {slide_num:2d} ({lang}): Bullets: {bullet_count:1d} (max 3), SVG texts: {len(result['texts']):2d}, Small (<15px): {small_count}, SVG Clip: {clip_count}"
+            status_str = f"Slide {slide_num:2d} ({lang}): Bullets: {bullet_count:1d} (max {result['maxAllowed']}), SVG texts: {len(result['texts']):2d}, Small (<15px): {small_count}, SVG Clip: {clip_count}"
             if slide_overflow:
                 status_str += " [SLIDE OVERFLOW DETECTED]"
             print(status_str)
             
-            if small_count > 0 or clip_count > 0 or bullet_count > 3 or slide_overflow:
+            if small_count > 0 or clip_count > 0 or bullet_count > result['maxAllowed'] or slide_overflow:
                 issues.append({
                     'lang': lang,
                     'slide': slide_num,
@@ -140,7 +142,7 @@ else:
     for issue in issues:
         print(f"\n--- Slide {issue['slide']} ({issue['lang']}) ---")
         if issue['bulletCount'] > 3:
-            print(f"  • Bullet count exceeded: {issue['bulletCount']} points (max 3 allowed)")
+            print(f"  • Bullet count exceeded: {issue['bulletCount']} points (max {result['maxAllowed']} allowed)")
         if issue['slideOverflow']:
             print("  • Slide content overflows viewport height!")
         for ov in issue['overflows']:

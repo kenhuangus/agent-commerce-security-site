@@ -1164,3 +1164,23 @@ html[lang="zh-CN"] body, .is-zh {
     display: none;
   }
 }
+
+
+/* ---------- Slide 16 Six Pillars Styling ---------- */
+.pillars-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.8vh !important;
+}
+.pillars-list li {
+  font-size: clamp(1.02rem, 1.82vh, 1.22rem) !important;
+  line-height: 1.36 !important;
+  padding-left: 2.0rem !important;
+}
+.pillars-list li::before {
+  font-size: 1.15rem !important;
+  top: 0.05rem !important;
+}
+#s16 .card {
+  padding: 1.5vh 1.8vw !important;
+}

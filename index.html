@@ -35,7 +35,8 @@
       <button type="button" class="bar__btn" id="fsBtn" aria-label="Toggle Fullscreen (F)" title="Toggle Fullscreen (F)">
         <span class="bar__btn-label" data-i18n="ui.fullscreen">Full Screen</span>
       </button>
-      <a href="https://kenhuangus.substack.com/" target="_blank" rel="noopener noreferrer" class="bar__cta bar__cta--substack" data-i18n="ui.substack">Substack ↗</a>
+      <a href="https://kenhuangus.substack.com/" target="_blank" rel="noopener noreferrer" class="bar__cta bar__cta--substack" data-i18n="ui.substack">Substack ↗</a>
+
       <a href="https://github.com/kenhuangus" target="_blank" rel="noopener" class="bar__cta bar__cta--alt" data-i18n="ui.repo">GitHub Repo ↗</a>
       <a href="https://distributedapps.ai/" target="_blank" rel="noopener" class="bar__cta" data-i18n="ui.launch">DistributedApps ↗</a>
     </div>
@@ -637,20 +638,32 @@
         <div class="two-col">
           <div class="card card--defense">
             <h3 class="card__title">
-              <span class="tag tag--green" data-i18n="s16.takeaways_title">3 Pillars of Agentic Security</span>
+              <span class="tag tag--green" data-i18n="s16.takeaways_title">6 Pillars of Agentic Security</span>
             </h3>
-            <ul class="clean-list">
+            <ul class="clean-list pillars-list">
               <li class="defense">
-                <strong data-i18n="s16.p1_t">Cryptographic Rails &amp; Invariants:</strong>
-                <span data-i18n="s16.p1_d">Non-custodial payment channels (x402/MPP) and smart contract invariants eliminate human checkout while mathematically bounding spend.</span>
+                <strong data-i18n="s16.p1_t">Payment Rails:</strong>
+                <span data-i18n="s16.p1_d">Non-custodial x402 and MPP channels enable micro-metered settlement with zero human checkout friction.</span>
               </li>
               <li class="defense">
-                <strong data-i18n="s16.p2_t">Verified Agency &amp; Memory Hygiene:</strong>
-                <span data-i18n="s16.p2_d">Spec-Driven Job Descriptions, single-use IBAC tokens, and signed 3-tier memory eliminate ambient authority and poisoning.</span>
+                <strong data-i18n="s16.p2_t">Smart Contracts:</strong>
+                <span data-i18n="s16.p2_d">Mathematical on-chain invariants strictly bound spending caps, preventing LLM prompt overrides.</span>
               </li>
               <li class="defense">
-                <strong data-i18n="s16.p3_t">Runtime Steering &amp; Observability:</strong>
-                <span data-i18n="s16.p3_d">Real-time trajectory tracing and PreToolUse interceptors detect drift and halt rogue actions before execution.</span>
+                <strong data-i18n="s16.p3_t">Autonomy Governance:</strong>
+                <span data-i18n="s16.p3_d">LoA 0–5 tiered bounding with deterministic circuit breakers that force dynamic step-downs.</span>
+              </li>
+              <li class="defense">
+                <strong data-i18n="s16.p4_t">Identity &amp; IBAC:</strong>
+                <span data-i18n="s16.p4_d">Spec-Driven Job Descriptions (SJD) and single-use capability tokens eliminate ambient authority.</span>
+              </li>
+              <li class="defense">
+                <strong data-i18n="s16.p5_t">Memory Hygiene:</strong>
+                <span data-i18n="s16.p5_d">Cryptographic provenance signatures and time-to-live expirations prevent poisoning and semantic drift.</span>
+              </li>
+              <li class="defense">
+                <strong data-i18n="s16.p6_t">Observability &amp; Steering:</strong>
+                <span data-i18n="s16.p6_d">Out-of-band PreToolUse interceptors and kill-switches halt unauthorized trajectories in real time.</span>
               </li>
             </ul>
           </div>
