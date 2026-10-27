@@ -27,7 +27,7 @@ This presentation outlines an enterprise security and risk governance framework 
 1. **Title Cover / Hero**: Architectural overview of Agentic Commerce & Agentic Security Foundations.
 2. **About the Speaker & Research Foundation**: Credentials, academic posts, and publications.
 3. **Agentic Commerce Paradigm & Threat Landscape**: M2M autonomous financial execution vs. Web2 e-commerce.
-4. **Modern Agent Payment Protocols**: HTTP 402/x402, Metered Payment Protocol (MPP), and A2A-Pay (ERC-8004).
+4. **Modern Agent Payment Protocols**: HTTP 402/x402, Machine Payment Protocol (MPP), and A2A-Pay (ERC-8004).
 5. **Financial Security Contracts & Cryptographic Invariants**: Conditional escrow, timelocks, slashing, and spend velocity caps.
 6. **Autonomy Governance (Levels of Autonomy)**: Formal 6-tier LoA 0 to LoA 5 operational taxonomy.
 7. **Threshold Control & Blast Radius Containment**: Multi-dimensional financial, tool, and anomaly thresholds + circuit breakers.
