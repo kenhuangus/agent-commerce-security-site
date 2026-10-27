@@ -26,7 +26,7 @@
       "connect.slide16_desc": "Scan to subscribe to Ken Huang's Substack newsletter for research updates",
 
       "slide.1.title": "Agentic Commerce & Security Foundations",
-      "slide.2.title": "About the Instructor: Ken Huang, CISSP",
+      "slide.2.title": "About Me: Ken Huang, CISSP",
       "slide.3.title": "Commerce Threat Landscape",
       "slide.4.title": "Modern Payment Protocols",
       "slide.5.title": "Financial Security Contracts",
@@ -53,7 +53,7 @@
 
       // Slide 2
       "about.kicker": "Authority & Academic Grounding",
-      "about.h2": "About the Instructor: Ken Huang, CISSP",
+      "about.h2": "About Me: Ken Huang, CISSP",
       "about.b1": "🎓 <strong>Adjunct Professor, University of San Francisco (USF)</strong> &amp; CEO of <a href=\"https://distributedapps.ai/\" target=\"_blank\" rel=\"noopener noreferrer\">DistributedApps.ai</a>",
       "about.b2": "🛡️ <strong>Fellow &amp; Co-Chair, CSA AI Safety Working Groups</strong> (MAESTRO) &amp; OWASP AIVSS Lead",
       "about.b3": "📚 <strong>Author of AI Security &amp; Agent Books</strong> (<a href=\"https://www.amazon.com/dp/B0HF3F86YM\" target=\"_blank\" rel=\"noopener noreferrer\">Harness Engineering</a>, Springer, Cambridge, Wiley)",
@@ -275,7 +275,7 @@
       "connect.slide16_desc": "扫码订阅 Ken Huang 的 Substack 专栏，获取最新研究动态",
 
       "slide.1.title": "智能体商业与自主安全体系",
-      "slide.2.title": "关于讲师：黄连金 (Ken Huang), CISSP",
+      "slide.2.title": "关于我：黄连金 (Ken Huang), CISSP",
       "slide.3.title": "智能体商业威胁全景",
       "slide.4.title": "现代智能体支付协议",
       "slide.5.title": "金融安全合约与不变量",
@@ -302,7 +302,7 @@
 
       // Slide 2
       "about.kicker": "权威资质与学术基石",
-      "about.h2": "关于讲师：黄连金 (Ken Huang), CISSP",
+      "about.h2": "关于我：黄连金 (Ken Huang), CISSP",
       "about.b1": "🎓 <strong>旧金山大学 (USF) 客座教授</strong> 与 <a href=\"https://distributedapps.ai/\" target=\"_blank\" rel=\"noopener noreferrer\">DistributedApps.ai</a> 创始人兼 CEO",
       "about.b2": "🛡️ <strong>云安全联盟 (CSA) AI 安全工作组 Fellow 兼联合主席</strong> (MAESTRO) 与 OWASP AIVSS 负责人",
       "about.b3": "📚 <strong>AI 安全与智能体专著作者</strong>（<a href=\"https://www.amazon.com/dp/B0HF3F86YM\" target=\"_blank\" rel=\"noopener noreferrer\">Harness Engineering</a>、Springer、剑桥大学出版社、Wiley）",
