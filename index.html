@@ -35,6 +35,7 @@
       <button type="button" class="bar__btn" id="fsBtn" aria-label="Toggle Fullscreen (F)" title="Toggle Fullscreen (F)">
         <span class="bar__btn-label" data-i18n="ui.fullscreen">Full Screen</span>
       </button>
+      <a href="https://kenhuangus.substack.com/" target="_blank" rel="noopener noreferrer" class="bar__cta bar__cta--substack" data-i18n="ui.substack">Substack ↗</a>
       <a href="https://github.com/kenhuangus" target="_blank" rel="noopener" class="bar__cta bar__cta--alt" data-i18n="ui.repo">GitHub Repo ↗</a>
       <a href="https://distributedapps.ai/" target="_blank" rel="noopener" class="bar__cta" data-i18n="ui.launch">DistributedApps ↗</a>
     </div>
@@ -105,6 +106,15 @@
                 </div>
               </li>
             </ul>
+            <a href="https://kenhuangus.substack.com/" target="_blank" rel="noopener noreferrer" class="instructor-substack-banner" title="Connect on Substack: kenhuangus.substack.com">
+              <img src="assets/images/qr-substack.svg" alt="Substack QR Code" class="instructor-substack-qr" />
+              <div class="instructor-substack-meta">
+                <div class="instructor-substack-badge" data-i18n="connect.slide2_badge">Substack Newsletter</div>
+                <div class="instructor-substack-url">kenhuangus.substack.com</div>
+                <div class="instructor-substack-desc" data-i18n="connect.slide2_desc">Subscribe for weekly deep-dives on Agentic AI &amp; Commerce Security</div>
+              </div>
+              <span class="instructor-substack-cta">Scan or Visit ↗</span>
+            </a>
           </div>
           <div class="author-books-card">
             <div class="author-books-header">
@@ -670,7 +680,39 @@
     <div class="dots" id="dots" role="tablist"></div>
     <span class="ctrl__count" id="count">1 / 16</span>
     <button type="button" class="ctrl__btn ctrl__btn--accent" id="nextBtn" aria-label="Next Slide" data-i18n="ui.next">Next ›</button>
+      <!-- Persistent Substack Connect Bar Widget (Visible on Every Slide) -->
+    <div class="ctrl__connect" id="ctrlConnectWidget">
+      <a href="https://kenhuangus.substack.com/" target="_blank" rel="noopener noreferrer" class="ctrl__connect-link" title="Connect on Substack: kenhuangus.substack.com">
+        <img src="assets/images/qr-substack.svg" alt="Substack QR" class="ctrl__connect-qr" />
+        <div class="ctrl__connect-meta">
+          <span class="ctrl__connect-title" data-i18n="connect.title">Connect on Substack</span>
+          <span class="ctrl__connect-sub">kenhuangus.substack.com</span>
+        </div>
+      </a>
+      <button type="button" class="ctrl__connect-expand" id="qrModalOpenBtn" title="Enlarge QR Code (Q)" aria-label="Enlarge QR Code">🔍</button>
+    </div>
   </nav>
+
+  <!-- Enlargeable Substack QR Modal Lightbox -->
+  <div class="qr-modal-backdrop" id="qrModal" aria-hidden="true">
+    <div class="qr-modal-card" role="dialog" aria-modal="true" aria-labelledby="qrModalTitle">
+      <button type="button" class="qr-modal-close" id="qrModalCloseBtn" aria-label="Close modal">&times;</button>
+      <div class="qr-modal-header">
+        <div class="qr-modal-badge">SUBSTACK NEWSLETTER</div>
+        <h3 class="qr-modal-title" id="qrModalTitle" data-i18n="connect.modal_title">Connect with Ken Huang on Substack</h3>
+        <p class="qr-modal-desc" data-i18n="connect.modal_desc">Scan with your phone to subscribe to Ken Huang's latest research on Agentic AI, AI Safety, and Commerce Security.</p>
+      </div>
+      <div class="qr-modal-body">
+        <div class="qr-modal-frame">
+          <img src="assets/images/qr-substack.png" alt="Substack QR Code" class="qr-modal-img" />
+        </div>
+        <div class="qr-modal-url">kenhuangus.substack.com</div>
+      </div>
+      <div class="qr-modal-footer">
+        <a href="https://kenhuangus.substack.com/" target="_blank" rel="noopener noreferrer" class="bar__cta bar__cta--accent" data-i18n="connect.modal_btn">Visit Substack Homepage ↗</a>
+      </div>
+    </div>
+  </div>
 
   <!-- Progress Bar Indicator -->
   <div class="progress" id="progress"></div>

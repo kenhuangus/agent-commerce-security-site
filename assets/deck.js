@@ -134,6 +134,11 @@
     } else if (e.key === "End") {
       e.preventDefault();
       go(total - 1);
+    } else if (e.key === "q" || e.key === "Q") {
+      e.preventDefault();
+      toggleQrModal();
+    } else if (e.key === "Escape") {
+      closeQrModal();
     } else if (e.key === "f" || e.key === "F") {
       e.preventDefault();
       toggleFullscreen();
@@ -180,4 +185,42 @@
     title.textContent = localizedTitle;
     updateFullscreenUI();
   });
+
+  // Substack QR Modal
+  const qrModal = document.getElementById("qrModal");
+  const qrOpenBtn = document.getElementById("qrModalOpenBtn");
+  const qrCloseBtn = document.getElementById("qrModalCloseBtn");
+  const ctrlQrImg = document.querySelector(".ctrl__connect-qr");
+
+  function openQrModal() {
+    if (qrModal) {
+      qrModal.classList.add("is-open");
+      qrModal.setAttribute("aria-hidden", "false");
+    }
+  }
+
+  function closeQrModal() {
+    if (qrModal) {
+      qrModal.classList.remove("is-open");
+      qrModal.setAttribute("aria-hidden", "true");
+    }
+  }
+
+  function toggleQrModal() {
+    if (qrModal && qrModal.classList.contains("is-open")) {
+      closeQrModal();
+    } else {
+      openQrModal();
+    }
+  }
+
+  if (qrOpenBtn) qrOpenBtn.addEventListener("click", openQrModal);
+  if (ctrlQrImg) ctrlQrImg.addEventListener("click", (e) => { e.preventDefault(); openQrModal(); });
+  if (qrCloseBtn) qrCloseBtn.addEventListener("click", closeQrModal);
+  if (qrModal) {
+    qrModal.addEventListener("click", (e) => {
+      if (e.target === qrModal) closeQrModal();
+    });
+  }
+
 })();
